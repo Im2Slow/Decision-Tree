@@ -9,15 +9,15 @@
 
 void Init(noeud * racine);
 void construire_Arbre(noeud * racine,int hauteur,double minAccuracy,double maxAccuracy,int compteur,double minEchantillon);
-double pourcentage(double valeur);
+double pourcentToRatio(double valeur);
 void menu(noeud const * racine);
-int exo1(noeud const * racine);
+int getHauteur(noeud const * racine);
 int max(int a, int b);
-int exo2(noeud const * racine);
-void exo3(noeud const * racine);
-void exo4(noeud const * racine);
+int getLargeur(noeud const * racine);
+void Arborescence(noeud const * racine);
+void Feuilles(noeud const * racine);
 void print_feuille(noeud const * racine,char chemin[]);
-void exo5(noeud const * racine);
+void Prediction(noeud const * racine);
 void Predict(noeud const * racine,double * newUser, double * precisionVar);
 
 #endif

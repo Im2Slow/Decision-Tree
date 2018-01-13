@@ -14,12 +14,13 @@ void construire_Arbre(noeud * racine, int hauteurMax,double minAccuracy,double m
 		construire_Arbre(racine->fils_gauche,hauteurMax,minAccuracy,maxAccuracy,compteur+1,minEchantillon);
 	}	
 }
-double pourcentage(double valeur)
+double pourcentToRatio(double valeur)
 {
 	double newValue = 0;
 	newValue = valeur/100;
 	return newValue;
 }
+
 void menu(noeud const * racine)
 {
 	int hauteur = 0;
@@ -33,26 +34,26 @@ void menu(noeud const * racine)
 		switch(input)
 		{
 			case 1:
-				hauteur = exo1(racine);
+				hauteur = getHauteur(racine);
 				printf("\n hauteur de l'arbre : %d \n Appuyez sur ENTREE pour continuer\n",hauteur);
 				scanf("%*c");
 				break;
 				
 			case 2:
-				largeur = exo2(racine);
+				largeur = getLargeur(racine);
 				printf("\n largeur de l'arbre : %d \n Appuyez sur ENTREE pour continuer\n",largeur);
 				scanf("%*c");
 				break;
 			case 3:
-				exo3(racine);
+				Arborescence(racine);
 				break;
 				
 			case 4:
-				exo4(racine);
+				Feuilles(racine);
 				break;
 				
 			case 5:
-				exo5(racine);
+				Prediction(racine);
 				break;
 				
 			case 6:
@@ -63,7 +64,7 @@ void menu(noeud const * racine)
 		}
 	}
 }
-int exo1(noeud const * racine)
+int getHauteur(noeud const * racine)
 {
 	if(racine == NULL)
 	{
@@ -71,7 +72,7 @@ int exo1(noeud const * racine)
 	}
 	else
 	{
-		return 1 + max(exo1(racine->fils_gauche),exo1(racine->fils_droite));
+		return 1 + max(getHauteur(racine->fils_gauche),getHauteur(racine->fils_droite));
 	}
 }
 int max(int a, int b)
@@ -85,7 +86,7 @@ int max(int a, int b)
 		return b;
 	}
 }
-int exo2(noeud const * racine)//init 0
+int getLargeur(noeud const * racine)//init 0
 {
 	if(racine == NULL)
 	{
@@ -97,16 +98,16 @@ int exo2(noeud const * racine)//init 0
 	}
 	else
 	{
-		return exo2(racine->fils_droite) + exo2(racine->fils_gauche);
+		return getLargeur(racine->fils_droite) + getLargeur(racine->fils_gauche);
 	}
 }
-void exo3(noeud const * racine)
+void Arborescence(noeud const * racine)
 {
 	printf("\nordre affichage : |-precision - nombre d'individus - variable choisie - critère(<= ou >) - médiane pour la variable choisie \n\n");
 	affichage_arborescence(racine,0);
 	scanf("%*c");
 }
-void exo4(noeud const * racine)
+void Feuilles(noeud const * racine)
 {
 	//printf("Les feuilles sont ordonnées de manière décroissante : les dernières feuilles affichées sont les plus proches de la racine\nsi deux feuilles sont issues du même parent, elles ont également le même numero\n");
 	char * str = (char*)malloc(sizeof(char));
@@ -115,7 +116,7 @@ void exo4(noeud const * racine)
 	free(str);
 	scanf("%*c");
 }
-void exo5(noeud const * racine)
+void Prediction(noeud const * racine)
 {
 	double * newElement = (double*)malloc((racine->matrice->nb_colonnes-1) * sizeof(double));
 	double precisionVar = 0;
@@ -126,7 +127,7 @@ void exo5(noeud const * racine)
 		scanf("%lf",&newElement[i]);
 	}
 	Predict(racine,newElement, &precisionVar);
-	printf("\nPrécision pour l'espèce %d : %lf\n",racine->id_espece,precisionVar);
+	printf("\nPrécision pour l'espèce %d : %lf %% \n",racine->id_espece,ratioTopourcent(precisionVar));
 	free(newElement);
 	scanf("%*c");
 }
@@ -163,7 +164,7 @@ void Predict(noeud const * racine,double * newUser, double * precisionVar)
 }
 void print_feuille(noeud const * racine,char chemin[])
 {
-	char buf[256];
+	char buf[20];
 	buf[0] = '\0';
 	if(racine->test==2)
 	{
@@ -187,7 +188,7 @@ void print_feuille(noeud const * racine,char chemin[])
 	//printf("\ntoAdd gets buf : %s\n",toAdd);
 	if(est_feuille(racine))
 	{
-		printf("\nFeuille trouvée -> precision : %lf , nombre individus : %d, chemin : %s\n",racine->precision,racine->nb_lignes,toAdd);
+		printf("\nFeuille trouvée -> precision : %lf %% , nombre individus : %d, chemin : %s\n",ratioTopourcent(racine->precision),racine->nb_lignes,toAdd);
 	}
 	else
 	{
@@ -203,17 +204,17 @@ void Init(noeud * racine)
 	double minAccuracy = 0;
 	double maxAccuracy = 0;
 	double minEchantillon = 0;
-	printf("Choisissez le seuil minimal de précision en pourcentage. Exemple : écrivez 10 pour 10 pourcents\n");
+	printf("Choisissez le seuil minimal de précision en pourcentage. Exemple : écrivez 10 pour 10 %% \n");
 	scanf(" %lf",&minAccuracy);
-	minAccuracy = pourcentage(minAccuracy);
+	minAccuracy = pourcentToRatio(minAccuracy);
 
-	printf("Choisissez le seuil maximal de précision en pourcentage. Exemple : écrivez 90 pour 90 pourcents\n");
+	printf("Choisissez le seuil maximal de précision en pourcentage. Exemple : écrivez 90 pour 90 %% \n");
 	scanf(" %lf",&maxAccuracy);
-	maxAccuracy = pourcentage(maxAccuracy);
+	maxAccuracy = pourcentToRatio(maxAccuracy);
 	
-	printf("Choisissez le pourcentage minimum d'individus par échantillons. Exemple : écrivez 10 pour 10 pourcents de la taille de l'échantillon de départ\n");
+	printf("Choisissez le pourcentage minimum d'individus par échantillons. Exemple : écrivez 10 pour 10 %% de la taille de l'échantillon de départ\n");
 	scanf(" %lf",&minEchantillon);
-	minEchantillon = pourcentage(minEchantillon);
+	minEchantillon = pourcentToRatio(minEchantillon);
 	
 	printf("Saisissez un entier correspondant à la hauteur maximum que l'arbre peut avoir :\n");
 	scanf(" %d",&hauteurMax);

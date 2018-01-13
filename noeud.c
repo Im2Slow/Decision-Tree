@@ -394,11 +394,11 @@ void affichage_arborescence(noeud const *arbre,int decal)
 		offset(decal+1);
 		if(arbre->racine == NULL)
 		{
-			printf(" | nb_lignes racine : %d \n",arbre->nb_lignes);
+			printf(" | racine - nb lignes : %d \n",arbre->nb_lignes);
 		}
 		else
 		{
-			printf(" |-%lf -%d - X%d",arbre->precision,arbre->nb_lignes,arbre->racine->indexVariable + 1);
+			printf(" |-%lf %% -%d - X%d",ratioTopourcent(arbre->precision),arbre->nb_lignes,arbre->racine->indexVariable + 1);
 		}
 		if(arbre->test == 1)
 		{
@@ -425,6 +425,12 @@ void affichage_arborescence(noeud const *arbre,int decal)
 			affichage_arborescence(arbre->fils_droite,decal+1);
 		}
 	}
+}
+double ratioTopourcent(double valeur)
+{
+	double newValue = 0;
+	newValue = valeur*100;
+	return newValue;
 }
 
 

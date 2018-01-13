@@ -48,5 +48,6 @@ bool allElementsAreEqual(double tab[], int taille);
 void afficherColonne(double tab[],int taille);
 void afficherTableau(int tab[], int taille);
 void InitTab(int tab[],int taille);
+double ratioTopourcent(double valeur);
 
 #endif
