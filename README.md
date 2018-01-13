@@ -7,18 +7,18 @@ Main Goal : Predict species with good accuracy for new individuals
 
 Tree Construction :
 
-![alt text](https://raw.githubusercontent.com/Im2Slow/Decision-Tree/master/setup.png)
+  ![alt text](https://raw.githubusercontent.com/Im2Slow/Decision-Tree/master/setup.png)
 
 Arborescent display of nodes :
 
-![alt text](https://raw.githubusercontent.com/Im2Slow/Decision-Tree/master/display.png)
+  ![alt text](https://raw.githubusercontent.com/Im2Slow/Decision-Tree/master/display.png)
 
 Accuracy prediction for new individuals for those setups :
 
 minimum accuracy threshold : 10%
 maximum accuracy threshold : 90%
 minimum individuals per sample threshold : 10%
-maximal height : 8
+maximum tree height : 8
 
-![alt text](https://raw.githubusercontent.com/Im2Slow/Decision-Tree/master/results.png)
+  ![alt text](https://raw.githubusercontent.com/Im2Slow/Decision-Tree/master/results.png)
 
